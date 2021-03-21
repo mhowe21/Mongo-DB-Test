@@ -82,7 +82,11 @@ router.post("/:id/friends/:friendId", ({ params, body }, res) => {
 });
 
 router.delete("/:id/friends/:friendId", ({ params, body }, res) => {
-  db.User.findOneAndUpdate({ $pull: { friends: params.friendId } })
+  db.User.findOneAndUpdate(
+    { _id: params.id },
+    { $pull: { friends: params.friendId } },
+    { new: true }
+  )
     .then((data) => {
       res.status(200).json(data);
     })
