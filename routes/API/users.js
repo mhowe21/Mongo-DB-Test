@@ -54,6 +54,33 @@ router.delete("/:id", ({ params, body }, res) => {
   });
 });
 
-router.post("/:id/friends/:friendId", ({ params, body }, res) => {});
+router.post("/:id/friends/:friendId", ({ params, body }, res) => {
+  db.User.findOneAndUpdate(
+    { _id: params.id },
+    { $push: { friends: params.friendId } },
+    {
+      new: true,
+      runValidators: true,
+    }
+  )
+    .then((data) => {
+      res.status(201).json(data);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(404).json(err);
+    });
+});
+
+router.delete("/:id/friends/:friendId", ({ params, body }, res) => {
+  db.User.findOneAndUpdate({ $pull: { friends: params.friendId } })
+    .then((data) => {
+      res.status(200).json(data);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(404).json(err);
+    });
+});
 
 module.exports = router;
