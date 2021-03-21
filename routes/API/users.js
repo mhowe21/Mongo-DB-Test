@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const db = require("../../models");
 
-router.post("/add_user", ({ body }, res) => {
+router.post("", ({ body }, res) => {
   db.User.create(body).then((data) => {
     res.status(201).json(data);
     console.log(data);
@@ -32,6 +32,26 @@ router.get("/:id", ({ params, body }, res) => {
       console.log(err);
       res.status(401).json(err);
     });
+});
+
+router.put("/:id", ({ params, body }, res) => {
+  db.User.findOneAndUpdate({ _id: params.id }, body, {
+    new: true,
+    runValidators: true,
+  })
+    .then((data) => {
+      res.status(200).json(data);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(404).json(err);
+    });
+});
+
+router.delete("/:id", ({ params, body }, res) => {
+  db.User.findOneAndDelete({ _id: params.id }).then((data) => {
+    res.status(200).json(data);
+  });
 });
 router.get("/testing", (req, res) => {
   res.json("you found the testing rout");
