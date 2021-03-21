@@ -85,8 +85,16 @@ router.put("/:id", ({ params, body }, res) => {
 });
 
 // reactions
-router.get("/:id/reactions", (req, res) => {
-  res.json("you fond the test endpoint!");
+router.get("/:id/reactions", ({ params, body }, res) => {
+  db.Thought.find({ _id: params.id })
+    .then((data) => {
+      console.log(data);
+      res.status(200).json(data);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(404).json(err);
+    });
 });
 
 router.post("/:id/reactions", ({ params, body }, res) => {
