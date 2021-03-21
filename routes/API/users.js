@@ -53,8 +53,7 @@ router.delete("/:id", ({ params, body }, res) => {
     res.status(200).json(data);
   });
 });
-router.get("/testing", (req, res) => {
-  res.json("you found the testing rout");
-});
+
+router.post("/:id/friends/:friendId", ({ params, body }, res) => {});
 
 module.exports = router;
