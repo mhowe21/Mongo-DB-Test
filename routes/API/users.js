@@ -12,7 +12,7 @@ router.get("", (req, res) => {
   db.User.find({})
     .populate({
       path: "Thought",
-      select: ["thoughtText", "createdAt", "username"],
+      select: "thoughtText",
     })
     .then((data) => {
       res.json(data);

@@ -1,5 +1,6 @@
 const { Schema, model } = require("mongoose");
 const Validator = require("../Utilities/validator");
+const reactionSchema = require("./Reaction");
 
 const ThoughtSchema = new Schema(
   {
@@ -16,10 +17,9 @@ const ThoughtSchema = new Schema(
     },
     username: {
       type: String,
-      unique: true,
-      required: "Username is required",
-      trim: true,
+      required: true,
     },
+    reactions: [reactionSchema],
   },
 
   {

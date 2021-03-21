@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const db = require("../../models");
+const { findOneAndUpdate } = require("../../models/Thought");
 
 // router.get("", (req, res) => {
 //   res.json("you have located the test rout for thoughts");
@@ -26,18 +27,27 @@ router.get("/:id", ({ params, body }, res) => {
     });
 });
 
+//add thought to user
 router.post("", ({ params, body }, res) => {
   db.Thought.create({
-    thoughtText: body.thoughtText,
     username: body.username,
+    thoughtText: body.thoughtText,
   })
     .then((data) => {
-      res.status(201).json(data);
+      db.User.findOneAndUpdate(
+        { username: body.username },
+        { $push: { thoughts: data._id } },
+        {
+          new: true,
+        }
+      ).then((addedData) => {
+        console.log(addedData);
+      });
+      res.json(data);
     })
     .catch((err) => {
       console.log(err);
-      res.status(422).json(err);
+      res.json(err);
     });
 });
-
 module.exports = router;
