@@ -50,7 +50,16 @@ router.put("/:id", ({ params, body }, res) => {
 
 router.delete("/:id", ({ params, body }, res) => {
   db.User.findOneAndDelete({ _id: params.id }).then((data) => {
-    res.status(200).json(data);
+    //res.status(200).json(data);
+    // clear user Thoughts on delete
+    db.Thought.deleteMany({ username: data.username }, { new: true })
+      .then((deletedData) => {
+        res.status(200).json(deletedData);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.json(404).json(err);
+      });
   });
 });
 
