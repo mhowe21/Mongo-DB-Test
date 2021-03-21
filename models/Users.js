@@ -16,6 +16,18 @@ const UserSchema = new Schema(
       required: "Email is required",
       validate: [isValid.emailValidator, "Please enter a valid email"],
     },
+    throughts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Thought",
+      },
+    ],
+    friends: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Users",
+      },
+    ],
   },
   {
     toJSON: {

@@ -15,7 +15,8 @@ const ThoughtSchema = new Schema(
       get: (createdAtVal) => dateFormat(createdAtVal),
     },
     username: {
-      ref: "User",
+      type: Schema.Types.ObjectId,
+      ref: "Users",
     },
   },
   {
