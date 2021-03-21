@@ -15,15 +15,11 @@ const ThoughtSchema = new Schema(
       get: (createdAtVal) => dateFormat(createdAtVal),
     },
     username: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
+      type: String,
+      unique: true,
+      required: "Username is required",
+      trim: true,
     },
-    reactions: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "reactionSchema",
-      },
-    ],
   },
 
   {
