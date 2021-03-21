@@ -16,9 +16,16 @@ const ThoughtSchema = new Schema(
     },
     username: {
       type: Schema.Types.ObjectId,
-      ref: "Users",
+      ref: "User",
     },
+    reactions: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "reactionSchema",
+      },
+    ],
   },
+
   {
     toJSON: {
       virtuals: true,
